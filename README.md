@@ -32,7 +32,7 @@ drop.group(FlashMiddleware()) { group in
 }
 
 ```
-###Usages
+### Usages
 
 Apply flash on a response, which will be shown on next request
 ```
@@ -42,7 +42,7 @@ return Response(redirect: "/admin/users").flash(.warning, "Updated user")
 return Response(redirect: "/admin/users").flash(.info, "Email sent")
 ```
 
-Misc functions
+### Misc functions
 
 ```
 // Add to request by string
@@ -59,7 +59,7 @@ try request.flash.refresh()
 
 ```
 
-Example of HTML
+### Example of HTML
 ```
 <!--Error-->
 #if(request.storage._flash.error) {
