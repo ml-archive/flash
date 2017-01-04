@@ -3,8 +3,14 @@ import HTTP
 @testable import Flash
 
 class FlashTests: XCTestCase {
-    func testMiddleware() {
-        let _ = FlashMiddleware()
+    func testMiddleware() throws {
+        let flashMiddleware = FlashMiddleware()
+        
+        let request = try Request(method: .get, uri: "uri")
+        let responder = TestResponse()
+        
+        // Need a session middleware
+        //let _ = try flashMiddleware.respond(to: request, chainingTo: responder)
         
         XCTAssertTrue(true)
     }
@@ -12,7 +18,11 @@ class FlashTests: XCTestCase {
     func testHelper() throws {
         do {
             let request = try Request(method: .get, uri: "uri")
-            let _ = Helper(request: request)
+            let helper = Helper(request: request)
+            
+            // Need a session middleware
+            //try helper.add("custom", "message")
+            
             
             XCTAssertTrue(true)
         } catch {
@@ -28,5 +38,11 @@ class FlashTests: XCTestCase {
             ("testHelper", testHelper),
             
         ]
+    }
+}
+
+class TestResponse: Responder {
+    func respond(to request: Request) throws -> Response {
+        return Response()
     }
 }
