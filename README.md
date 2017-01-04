@@ -105,3 +105,7 @@ try request.flash.refresh()
 }
 
 ```
+Add the flash html to one file and embed it in rest of your views or through a base layout
+fx: #embed("Layout/Partials/Elements/alerts")
+or
+fx: #extend("Layout/Base-Layout")
