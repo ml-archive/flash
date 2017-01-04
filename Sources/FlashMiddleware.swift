@@ -5,12 +5,30 @@ import Auth
 public class FlashMiddleware: Middleware {
     public init() {}
     
+    /// response
+    ///
+    /// - Parameters:
+    ///   - request: Response
+    ///   - next: Responder
+    /// - Returns: Response
+    /// - Throws: Error
     public func respond(to request: Request, chainingTo next: Responder) throws -> Response {
+       
+        try FlashMiddleware.handleRequest(request)
         
-        /*
-        /Take flash session and apply to storage, while moving new to old
-        */
+        // Make request
+        let response = try next.respond(to: request)
         
+        try FlashMiddleware.handleResponse(response, request)
+        
+        return response
+    }
+    
+    /// Take flash session and apply to storage, while moving new to old
+    ///
+    /// - Parameter request: Request
+    /// - Throws: Error
+    public static func handleRequest(_ request: Request) throws {
         // Init flash node
         let requestFlash = try request.session().data[Helper.flashKey, Helper.State.new.rawValue] ?? Node([])
         
@@ -22,17 +40,18 @@ public class FlashMiddleware: Middleware {
         
         // Clear new node
         try request.session().data[Helper.flashKey, Helper.State.new.rawValue] = nil
+    }
     
-        // Make request
-        let response = try next.respond(to: request)
-        
-        
-        /*
-        * Retrieve flash storage from response and add it to session
-        */
+    /// Retrieve flash storage from response and add it to session
+    ///
+    /// - Parameters:
+    ///   - response: Response
+    ///   - request: Request
+    /// - Throws: Error
+    public static func handleResponse(_ response: Response, _ request: Request) throws {
         // Retreive flash
         guard let flash: Node = response.storage[Helper.flashKey] as? Node else {
-            return response
+            return
         }
         
         // Consider making next 4 ifs more flexible
@@ -51,8 +70,6 @@ public class FlashMiddleware: Middleware {
         if let warning: String = flash[Helper.FlashType.warning.rawValue]?.string {
             try request.flash.add(.warning, warning)
         }
-        
-        return response
     }
 }
 
