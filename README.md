@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/nodes-vapor/flash.svg?branch=master)](https://travis-ci.org/nodes-vapor/flash)
 [![codecov](https://codecov.io/gh/nodes-vapor/flash/branch/master/graph/badge.svg)](https://codecov.io/gh/nodes-vapor/flash)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/nodes-vapor/flash/master/LICENSE)
+
 This package is to ease using flash message between your views
 
 ![image](https://cloud.githubusercontent.com/assets/1279756/21659442/fcfdd126-d2ca-11e6-8157-d6860aa02363.png)
