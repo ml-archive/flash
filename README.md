@@ -16,18 +16,18 @@ Update your `Package.swift` file.
 ```
 
 ### main.swift
-```
+```swift
 import Flash
 ```
 
 And add middleware either global
-```
+```swift
 drop.middleware.append(FlashMiddleware())
 ```
 
 or just to your route group
 
-```
+```swift
 drop.group(FlashMiddleware()) { group in
    // Routes
 }
@@ -36,7 +36,7 @@ drop.group(FlashMiddleware()) { group in
 ### Usages
 
 Apply flash on a response, which will be shown on next request
-```
+```swift
 return Response(redirect: "/admin/users").flash(.error, "Failed to save user")
 return Response(redirect: "/admin/users").flash(.success, "Successfuly saved")
 return Response(redirect: "/admin/users").flash(.warning, "Updated user")
@@ -45,7 +45,7 @@ return Response(redirect: "/admin/users").flash(.info, "Email sent")
 
 ### Misc functions
 
-```
+```swift
 // Add to request by string
 try request.flash.add(custom: String, message: String)
 
@@ -61,7 +61,7 @@ try request.flash.refresh()
 ```
 
 ### Example of HTML
-```
+```html
 <!--Error-->
 #if(request.storage._flash.error) {
     <div class="alert alert-danger alert-dismissible fade in to-be-animated-in" role="alert">
