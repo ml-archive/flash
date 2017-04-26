@@ -1,6 +1,6 @@
 import Vapor
 import HTTP
-import Auth
+import AuthProvider
 
 public class FlashMiddleware: Middleware {
     public init() {}
@@ -30,16 +30,16 @@ public class FlashMiddleware: Middleware {
     /// - Throws: Error
     public static func handleRequest(_ request: Request) throws {
         // Init flash node
-        let requestFlash = try request.session().data[Helper.flashKey, Helper.State.new.rawValue] ?? Node([])
-        
+        let requestFlash = try request.assertSession().data[Helper.flashKey, Helper.State.new.rawValue] ?? Node([])
+
         // Copy new node to old node
-        try request.session().data[Helper.flashKey, Helper.State.old.rawValue] = requestFlash
+        try request.assertSession().data[Helper.flashKey, Helper.State.old.rawValue] = requestFlash
         
         // Apply new node to request storage
         request.storage[Helper.flashKey] = requestFlash
         
         // Clear new node
-        try request.session().data[Helper.flashKey, Helper.State.new.rawValue] = nil
+        try request.assertSession().data[Helper.flashKey, Helper.State.new.rawValue] = nil
     }
     
     /// Retrieve flash storage from response and add it to session
