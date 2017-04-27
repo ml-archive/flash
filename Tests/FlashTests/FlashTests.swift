@@ -4,10 +4,10 @@ import HTTP
 
 class FlashTests: XCTestCase {
     func testMiddleware() throws {
-        let flashMiddleware = FlashMiddleware()
+        let _ = FlashMiddleware()
         
-        let request = try Request(method: .get, uri: "uri")
-        let responder = TestResponse()
+        let _ = try Request(method: .get, uri: "uri")
+        let _ = TestResponse()
         
         // Need a session middleware
         //let _ = try flashMiddleware.respond(to: request, chainingTo: responder)
@@ -18,7 +18,7 @@ class FlashTests: XCTestCase {
     func testHelper() throws {
         do {
             let request = try Request(method: .get, uri: "uri")
-            let helper = Helper(request: request)
+            let _ = Helper(request: request)
             
             // Need a session middleware
             //try helper.add("custom", "message")
