@@ -8,14 +8,14 @@ This package is to ease using flash message between your views
 
 ![image](https://cloud.githubusercontent.com/assets/1279756/21659442/fcfdd126-d2ca-11e6-8157-d6860aa02363.png)
 
-#Installation
+# Installation
 
 Update your `Package.swift` file.
 ```swift
 .Package(url: "https://github.com/nodes-vapor/flash", majorVersion: 0)
 ```
 
-### main.swift
+### `main.swift`
 ```swift
 import Flash
 ```
@@ -106,6 +106,6 @@ try request.flash.refresh()
 
 ```
 Add the flash html to one file and embed it in rest of your views or through a base layout
-fx: #embed("Layout/Partials/Elements/alerts")
+fx: `#embed("Layout/Partials/Elements/alerts")`
 or
-fx: #extend("Layout/Base-Layout")
+fx: `#extend("Layout/Base-Layout")`
