@@ -15,23 +15,43 @@ Update your `Package.swift` file.
 .Package(url: "https://github.com/nodes-vapor/flash", majorVersion: 0)
 ```
 
-### `main.swift`
+Then add the middleware either globally or to a route group.
+
+## Adding Middleware Globally
+
+### `Sources/App/Config+Setup.swift`
 ```swift
 import Flash
 ```
 
-And add middleware either global
 ```swift
-drop.middleware.append(FlashMiddleware())
+public func setup() throws {
+    // ...
+    
+    addConfigurable(middleware: FlashMiddleware(), name: "flash")
+}
 ```
 
-or just to your route group
+### `Config/droplet.json`
+
+Make sure both `"sessions"` and `"flash"` are present:
+
+```json
+    "middleware": [
+        "error",
+        "date",
+        "file",
+        "sessions",
+        "flash"
+    ],
+```
+
+## Adding Middleware to a Route Group
 
 ```swift
 drop.group(FlashMiddleware()) { group in
    // Routes
 }
-
 ```
 ### Usages
 
