@@ -6,7 +6,6 @@ dependencies:
 build:
   override:
     - swift build
-    - swift build -c release
 test:
   override:
     - swift test
