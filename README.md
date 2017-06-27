@@ -1,4 +1,4 @@
-# Flash
+# Flash ⚡️
 [![Language](https://img.shields.io/badge/Swift-3.1-brightgreen.svg)](http://swift.org)
 [![Build Status](https://img.shields.io/circleci/project/github/nodes-vapor/flash.svg)](https://circleci.com/gh/nodes-vapor/flash)
 [![codebeat badge](https://codebeat.co/badges/52c2f960-625c-4a63-ae63-52a24d747da1)](https://codebeat.co/projects/github-com-nodes-vapor-flash)
