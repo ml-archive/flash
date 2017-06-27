@@ -1,7 +1,9 @@
 # Flash
-[![Language](https://img.shields.io/badge/Swift-3-brightgreen.svg)](http://swift.org)
-[![Build Status](https://travis-ci.org/nodes-vapor/flash.svg?branch=master)](https://travis-ci.org/nodes-vapor/flash)
+[![Language](https://img.shields.io/badge/Swift-3.1-brightgreen.svg)](http://swift.org)
+[![Build Status](https://img.shields.io/circleci/project/github/nodes-vapor/flash.svg)](https://circleci.com/gh/nodes-vapor/flash)
+[![codebeat badge](https://codebeat.co/badges/52c2f960-625c-4a63-ae63-52a24d747da1)](https://codebeat.co/projects/github-com-nodes-vapor-flash)
 [![codecov](https://codecov.io/gh/nodes-vapor/flash/branch/master/graph/badge.svg)](https://codecov.io/gh/nodes-vapor/flash)
+[![Readme Score](http://readme-score-api.herokuapp.com/score.svg?url=https://github.com/nodes-vapor/flash)](http://clayallsopp.github.io/readme-score?url=https://github.com/nodes-vapor/flash)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/nodes-vapor/flash/master/LICENSE)
 
 This package is to ease using flash message between your views
@@ -12,14 +14,16 @@ This package is to ease using flash message between your views
 
 Update your `Package.swift` file.
 ```swift
-.Package(url: "https://github.com/nodes-vapor/flash", majorVersion: 0)
+.Package(url: "https://github.com/nodes-vapor/flash", majorVersion: 1)
 ```
 
-Then add the middleware either globally or to a route group.
+## Getting started 🚀
 
-## Adding Middleware Globally
+You can add the middleware either globally or to a route group.
 
-### `Sources/App/Config+Setup.swift`
+### Adding Middleware Globally
+
+#### `Sources/App/Config+Setup.swift`
 ```swift
 import Flash
 ```
@@ -32,7 +36,7 @@ public func setup() throws {
 }
 ```
 
-### `Config/droplet.json`
+#### `Config/droplet.json`
 
 Make sure both `"sessions"` and `"flash"` are present:
 
@@ -46,14 +50,14 @@ Make sure both `"sessions"` and `"flash"` are present:
     ],
 ```
 
-## Adding Middleware to a Route Group
+### Adding Middleware to a Route Group
 
 ```swift
 drop.group(FlashMiddleware()) { group in
    // Routes
 }
 ```
-### Usages
+## Using flash messages ⚡️
 
 Apply flash on a response, which will be shown on next request
 ```swift
@@ -125,7 +129,19 @@ try request.flash.refresh()
 }
 
 ```
+
 Add the flash html to one file and embed it in rest of your views or through a base layout
-fx: `#embed("Layout/Partials/Elements/alerts")`
+e.g.: `#embed("Layout/Partials/Elements/alerts")`
 or
-fx: `#extend("Layout/Base-Layout")`
+e.g.: `#extend("Layout/Base-Layout")`
+
+
+## 🏆 Credits
+
+This package is developed and maintained by the Vapor team at [Nodes](https://www.nodesagency.com).
+The package owner for this project is [Tom](https://github.com/tomserowka).
+
+
+## 📄 License
+
+This package is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
