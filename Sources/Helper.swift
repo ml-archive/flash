@@ -20,6 +20,10 @@ public final class Helper {
     public init(request: Request) {
         self.request = request
     }
+
+    private func foo() {
+        return
+    }
     
     /// Add a message to a enum key
     ///
