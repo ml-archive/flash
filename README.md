@@ -1,7 +1,9 @@
 # Flash
-[![Language](https://img.shields.io/badge/Swift-3-brightgreen.svg)](http://swift.org)
-[![Build Status](https://travis-ci.org/nodes-vapor/flash.svg?branch=master)](https://travis-ci.org/nodes-vapor/flash)
-[![codecov](https://codecov.io/gh/nodes-vapor/flash/branch/master/graph/badge.svg)](https://codecov.io/gh/nodes-vapor/flash)
+[![Swift Version](https://img.shields.io/badge/Swift-3-brightgreen.svg)](http://swift.org)
+[![Vapor Version](https://img.shields.io/badge/Vapor-1-F6CBCA.svg)](http://vapor.codes)
+[![Circle CI](https://circleci.com/gh/nodes-vapor/flash/tree/vapor-1.svg?style=shield)](https://circleci.com/gh/nodes-vapor/flash)
+[![codebeat badge](https://codebeat.co/badges/02ee207b-d169-4505-891c-5dc149b1ea22)](https://codebeat.co/projects/github-com-nodes-vapor-flash-vapor-1)
+[![Readme Score](http://readme-score-api.herokuapp.com/score.svg?url=https://github.com/nodes-vapor/flash)](http://clayallsopp.github.io/readme-score?url=https://github.com/nodes-vapor/flash)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/nodes-vapor/flash/master/LICENSE)
 
 This package is to ease using flash message between your views
