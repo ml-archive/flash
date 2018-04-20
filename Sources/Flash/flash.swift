@@ -17,8 +17,11 @@ public final class FlashContainer: Service {
     public var flashes: [(type: FlashType, message: String)] = []
 }
 
-public enum FlashType {
-
+public enum FlashType: String {
+    case error = "error"
+    case success = "success"
+    case info = "info"
+    case warning = "warning"
 }
 
 extension Response {
