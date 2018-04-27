@@ -1,6 +1,12 @@
 import Service
 import Vapor
 
+extension FlashProvider {
+    public static var tags: [String: TagRenderer] {
+        return ["flash": FlashTag()]
+    }
+}
+
 public final class FlashProvider: Provider {
     public init() {}
     
@@ -79,6 +85,7 @@ public struct FlashMiddleware: Middleware {
         let session = try req.session()
 
         if let data = session["_flash"]?.data(using: .utf8) {
+            print(String(data: data, encoding: .utf8))
             let flash = try JSONDecoder().decode(FlashContainer.self, from: data)
             let container = try req.privateContainer.make(FlashContainer.self)
             container.new = flash.new
