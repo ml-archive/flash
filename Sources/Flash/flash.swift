@@ -68,6 +68,18 @@ extension Response {
     }
 }
 
+extension EventLoopFuture where T: Response {
+    func flash(_ type: FlashType, _ message: String) -> Future<Response> {
+        return self.map(to: Response.self) { res in
+            if let container = try? res.privateContainer.make(FlashContainer.self) {
+                container.flashes.append(.init(type, message))
+            }
+
+            return res
+        }
+    }
+}
+
 public struct FlashMiddleware: Middleware {
     public init() {}
     
