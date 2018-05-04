@@ -12,5 +12,6 @@ let package = Package(
     ],
     targets: [
         .target(name: "Flash", dependencies: ["Vapor", "Leaf"]),
+        .testTarget(name: "FlashTests", dependencies: ["Flash"]),
     ]
 )
