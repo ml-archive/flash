@@ -1,9 +1,17 @@
+// swift-tools-version:4.0
 import PackageDescription
 
 let package = Package(
     name: "Flash",
+    products: [
+        .library(name: "Flash", targets: ["Flash"]),
+    ],
     dependencies: [
-        .Package(url: "https://github.com/vapor/vapor.git", majorVersion: 2),
-        .Package(url: "https://github.com/vapor/auth-provider.git", majorVersion: 1)
+        .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0-rc"),
+        .package(url: "https://github.com/vapor/leaf.git", from: "3.0.0-rc"),
+    ],
+    targets: [
+        .target(name: "Flash", dependencies: ["Vapor", "Leaf"]),
+        .testTarget(name: "FlashTests", dependencies: ["Flash"]),
     ]
 )
