@@ -1,4 +1,3 @@
-import Async
 import Leaf
 import TemplateKit
 

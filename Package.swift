@@ -8,8 +8,9 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/vapor/vapor.git", from: "3.0.0-rc"),
+        .package(url: "https://github.com/vapor/leaf.git", from: "3.0.0-rc"),
     ],
     targets: [
-        .target(name: "Flash", dependencies: ["Vapor"]),
+        .target(name: "Flash", dependencies: ["Vapor", "Leaf"]),
     ]
 )
