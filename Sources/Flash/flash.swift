@@ -58,7 +58,7 @@ public enum FlashType: String, Codable {
     case warning
 }
 
-extension Response {
+public extension Response {
     public func flash(_ type: FlashType, _ message: String) -> Response {
         if let container = try? privateContainer.make(FlashContainer.self) {
             container.flashes.append(.init(type, message))
@@ -68,8 +68,8 @@ extension Response {
     }
 }
 
-extension EventLoopFuture where T: Response {
-    func flash(_ type: FlashType, _ message: String) -> Future<Response> {
+public extension EventLoopFuture where T: Response {
+    public func flash(_ type: FlashType, _ message: String) -> Future<Response> {
         return self.map(to: Response.self) { res in
             if let container = try? res.privateContainer.make(FlashContainer.self) {
                 container.flashes.append(.init(type, message))
