@@ -15,7 +15,7 @@ This package is to ease using flash message between your views
 
 Update your `Package.swift` file.
 ```swift
-.package(url: "https://github.com/nodes-vapor/flash", from: "2.0.0-beta")
+.package(url: "https://github.com/nodes-vapor/flash.git", from: "2.0.0-beta")
 ```
 
 ## Getting started 🚀
