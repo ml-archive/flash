@@ -18,22 +18,22 @@ public final class FlashTag: TagRenderer {
         })
 
         dict["errors"] = try .array(flash.flashes.compactMap { flash in
-            guard flash.type == .error else { return nil }
+            guard flash.kind == .error else { return nil }
             return try flash.convertToTemplateData()
         })
 
         dict["warnings"] = try .array(flash.flashes.compactMap { flash in
-            guard flash.type == .warning else { return nil }
+            guard flash.kind == .warning else { return nil }
             return try flash.convertToTemplateData()
         })
 
         dict["successes"] = try .array(flash.flashes.compactMap { flash in
-            guard flash.type == .success else { return nil }
+            guard flash.kind == .success else { return nil }
             return try flash.convertToTemplateData()
         })
 
         dict["information"] = try .array(flash.flashes.compactMap { flash in
-            guard flash.type == .info else { return nil }
+            guard flash.kind == .info else { return nil }
             return try flash.convertToTemplateData()
         })
 
@@ -51,14 +51,14 @@ public final class FlashTag: TagRenderer {
 extension Flash: TemplateDataRepresentable {
     public func convertToTemplateData() throws -> TemplateData {
         return TemplateData.dictionary([
-            "type": .string(self.type.rawValue),
-            "bootstrapType": .string(self.type.bootstrapClass),
+            "kind": .string(self.kind.rawValue),
+            "bootstrapClass": .string(self.kind.bootstrapClass),
             "message": .string(self.message)
         ])
     }
 }
 
-extension FlashType {
+extension Flash.Kind {
     var bootstrapClass: String {
         switch self {
         case .error: return "danger"

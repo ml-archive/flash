@@ -9,7 +9,7 @@
 
 This package is to ease using flash message between your views
 
-![image](https://cloud.githubusercontent.com/assets/1279756/21659442/fcfdd126-d2ca-11e6-8157-d6860aa02363.png)
+![image](https://github.com/nodes-vapor/flash/blob/master/flash.png)
 
 # Installation
 
@@ -20,9 +20,39 @@ Update your `Package.swift` file.
 
 ## Getting started 🚀
 
-TODO. While we make the docs, feel free to look at how [Admin Panel](https://github.com/nodes-vapor/admin-panel/tree/vapor-3) uses this package.
+First make sure that you've imported Flash everywhere when needed:
+
+```swift
+import Flash
+```
+
+### Adding the provider
+
+```swift
+public func register(_ services: inout Services) throws {
+    try services.register(FlashProvider())
+}
+```
+
+### Adding the middleware
+
+TODO
+
+### Adding the Leaf tag
+
+TODO
+
+## Using Flash messages
+
+TODO
 
 ### Example of HTML
+
+#### Not using the Bootstrap package
+
+TODO
+
+#### Using the Bootstrap package
 
 The below example uses the Vapor 3 [Bootstrap package](https://github.com/nodes-vapor/bootstrap) for generating the alert html.
 
