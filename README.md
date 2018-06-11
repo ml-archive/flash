@@ -7,7 +7,7 @@
 [![Readme Score](http://readme-score-api.herokuapp.com/score.svg?url=https://github.com/nodes-vapor/flash)](http://clayallsopp.github.io/readme-score?url=https://github.com/nodes-vapor/flash)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/nodes-vapor/flash/master/LICENSE)
 
-This package is to ease using flash message between your views
+This package allows you to display Flash messages between your views.
 
 ![image](https://github.com/nodes-vapor/flash/blob/master/flash.png)
 
@@ -105,6 +105,7 @@ Further, using the `message` property you will be able to pull out the message o
 
 Without using any dependencies, this is how Flash messages could be rendered:
 
+```html
 <div class="alerts">
 #flash() {
     #for(flash in all) {
@@ -113,6 +114,7 @@ Without using any dependencies, this is how Flash messages could be rendered:
     }
 }
 </div>
+```
 
 #### Using the Bootstrap package
 
