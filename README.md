@@ -36,21 +36,83 @@ public func register(_ services: inout Services) throws {
 
 ### Adding the middleware
 
-TODO
+You can either add the Flash middleware globally by doing:
+
+```swift
+public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
+    var middlewares = MiddlewareConfig()
+    middlewares.use(FlashMiddleware.self)
+    middlewares.use(SessionsMiddleware.self)
+    services.register(middlewares)
+}
+```
+
+Alternatively, you can add the middleware to individual route groups where needed:
+
+```swift
+router.group(FlashMiddleware()) { router in
+    // .. routes
+}
+```
+
+Please note that the `SessionsMiddleware` needs to be added to the same route groups where Flash is added.
 
 ### Adding the Leaf tag
 
-TODO
+In order to render Flash messages, you will need to add the Flash leaf tag:
+
+```swift
+public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
+    services.register { _ -> LeafTagConfig in
+        var tags = LeafTagConfig.default()
+        tags.use(FlashTag(), as: "flash")
+        return tags
+    }
+}
+```
 
 ## Using Flash messages
 
-TODO
+With Flash set up, you are now able to redirect while adding a Flash message, given a `Request`:
+
+```swift
+request.redirect(to: "/users").flash(.success, "Successfully saved")
+request.redirect(to: "/users").flash(.info, "Email sent")
+request.redirect(to: "/users").flash(.warning, "Updated user")
+request.redirect(to: "/users").flash(.error, "Something went wrong")
+```
 
 ### Example of HTML
 
+This package comes with a Leaf tag that makes it easy and convenient to display Flash messages. We suggest to use the [Bootstrap package](https://github.com/nodes-vapor/bootstrap) for rendering Bootstrap elements, but this package does not depend on it.
+
+It's possible to loop through the different kinds of messages using:
+
+- `all`: All Flash messages no matter the kind.
+- `successes`: All Flash messages of type `success`.
+- `information`: All Flash messages of type `info`.
+- `warnings`: All Flash messages of type `warning`.
+- `errors`: All Flash messages of type `error`.
+
+Further, using the `message` property you will be able to pull out the message of the Flash message. You can also get the kind by using the `kind` property. This property will hold one of the following values: `success`, `info`, `warning` or `error`. Lastly, you can use the `bootstrapClass` to get the relevant Bootstrap class:
+
+- `success` will return `success`.
+- `info` will return `info`.
+- `warning` will return `warning`.
+- `error` will return `danger`.
+
 #### Not using the Bootstrap package
 
-TODO
+Without using any dependencies, this is how Flash messages could be rendered:
+
+<div class="alerts">
+#flash() {
+    #for(flash in all) {
+        Message: #(flash.message)
+        Type: #(flash.kind)
+    }
+}
+</div>
 
 #### Using the Bootstrap package
 
@@ -60,7 +122,7 @@ The below example uses the Vapor 3 [Bootstrap package](https://github.com/nodes-
 <div class="alerts">
 #flash() {
     #for(flash in all) {
-        #bs:alert(flash.bootstrapType) {
+        #bs:alert(flash.bootstrapClass) {
             #(flash.message)
         }
     }
