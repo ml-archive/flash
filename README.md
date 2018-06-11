@@ -29,7 +29,7 @@ import Flash
 ### Adding the provider
 
 ```swift
-public func register(_ services: inout Services) throws {
+public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
     try services.register(FlashProvider())
 }
 ```
