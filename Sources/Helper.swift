@@ -15,7 +15,7 @@ public final class Helper {
         case warning = "warning"
     }
     
-    private let request: Request
+    private weak var request: Request?
     
     public init(request: Request) {
         self.request = request
@@ -28,7 +28,7 @@ public final class Helper {
     ///   - message: String message
     /// - Throws: Error
     public func add(_ type: FlashType, _ message: String) throws {
-        try request.assertSession().data[Helper.flashKey, State.new.rawValue, type.rawValue] = Node(message)
+        try request?.assertSession().data[Helper.flashKey, State.new.rawValue, type.rawValue] = Node(message)
     }
     
     /// Add a message to a custom key
@@ -38,7 +38,7 @@ public final class Helper {
     ///   - message: String message
     /// - Throws: Error
     public func add(_ custom: String, _ message: String) throws {
-        try request.assertSession().data[Helper.flashKey, State.new.rawValue, custom] = Node(message)
+        try request?.assertSession().data[Helper.flashKey, State.new.rawValue, custom] = Node(message)
     }
     
     /// Refresh session, move current flash messages to "new" again, 
@@ -47,14 +47,14 @@ public final class Helper {
     /// - Throws: Error
     public func refresh() throws {
         // Copy old node to new node
-        try request.assertSession().data[Helper.flashKey, State.new.rawValue] = try request.assertSession().data[Helper.flashKey, State.old.rawValue] ?? Node([])
+        try request?.assertSession().data[Helper.flashKey, State.new.rawValue] = try request?.assertSession().data[Helper.flashKey, State.old.rawValue] ?? Node([])
     }
     
     /// Clear the session
     ///
     /// - Throws: Error
     public func clear() throws {
-        try request.assertSession().data[Helper.flashKey] = nil
-        request.storage[Helper.flashKey] = nil
+        try request?.assertSession().data[Helper.flashKey] = nil
+        request?.storage[Helper.flashKey] = nil
     }
 }
