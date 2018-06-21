@@ -59,7 +59,13 @@ Please note that the `SessionsMiddleware` needs to be added to the same route gr
 
 ### Adding the Leaf tag
 
-In order to render Flash messages, you will need to add the Flash leaf tag:
+#### Using a shared Leaf tag config
+
+This package supports using a shared Leaf tag config which removes the task of registering the tags from the consumer of this package. Please see [this description](https://github.com/nodes-vapor/sugar#mutable-leaf-tag-config) if you want to use this.
+
+#### Manually registering the Leaf tag(s)
+
+In order to render Flash messages, you will need to add the Flash Leaf tag:
 
 ```swift
 public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
