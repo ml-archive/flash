@@ -15,7 +15,7 @@ This package allows you to display Flash messages between your views.
 
 Update your `Package.swift` file.
 ```swift
-.package(url: "https://github.com/nodes-vapor/flash.git", from: "2.0.0")
+.package(url: "https://github.com/nodes-vapor/flash.git", from: "3.0.0")
 ```
 
 ## Getting started 🚀
@@ -141,12 +141,10 @@ The below example uses the Vapor 3 [Bootstrap package](https://github.com/nodes-
 
 Add the Flash html to one file and embed it in rest of your views or through a base layout, e.g.: `#embed("alerts")`.
 
-
 ## 🏆 Credits
 
 This package is developed and maintained by the Vapor team at [Nodes](https://www.nodesagency.com).
 The package owner for this project is [Brett](https://github.com/brettrtoomey).
-
 
 ## 📄 License
 
