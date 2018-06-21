@@ -6,6 +6,7 @@ public final class FlashProvider: Provider {
     public init() {}
 
     public func register(_ services: inout Services) throws {
+        try services.register(MutableLeafTagConfigProvider())
         services.register(FlashMiddleware.self)
         services.register { container in
             return FlashContainer()
