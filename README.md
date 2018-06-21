@@ -61,7 +61,7 @@ Please note that the `SessionsMiddleware` needs to be added to the same route gr
 
 #### Using a shared Leaf tag config
 
-This package supports using a shared Leaf tag config which removes the task of registering the tags from the consumer of this package. Please see [this description](TODO) if you want to use this.
+This package supports using a shared Leaf tag config which removes the task of registering the tags from the consumer of this package. Please see [this description](https://github.com/nodes-vapor/sugar#mutable-leaf-tag-config) if you want to use this.
 
 #### Manually registering the Leaf tag(s)
 
