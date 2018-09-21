@@ -88,7 +88,7 @@ request.redirect(to: "/users").flash(.warning, "Updated user")
 request.redirect(to: "/users").flash(.error, "Something went wrong")
 ```
 
-**Make sure** the route you are redirecting to is rendering the view on a `privateContainer`. For example::
+**Make sure** the route you are redirecting to is rendering the view on a `privateContainer`. For example:
 ```swift
 func renderRegister(req: Request) throws -> Future<View> {
   let viewRenderer = try req.privateContainer.make(LeafRenderer.self)
