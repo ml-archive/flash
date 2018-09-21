@@ -92,7 +92,7 @@ request.redirect(to: "/users").flash(.error, "Something went wrong")
 ```swift
 func renderRegister(req: Request) throws -> Future<View> {
   let viewRenderer = try req.privateContainer.make(LeafRenderer.self)
-  return viewRenderer.render("User/register", viewData)
+  return viewRenderer.render("User/register")
 }
 ```
 ### Example of HTML
