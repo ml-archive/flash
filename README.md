@@ -118,14 +118,14 @@ Further, using the `message` property you will be able to pull out the message o
 
 Without using any dependencies, this is how Flash messages could be rendered:
 
-```html
+```javascript
 <div class="alerts">
-#flash() {
-    #for(flash in all) {
-        Message: #(flash.message)
-        Type: #(flash.kind)
+    #flash() {
+        #for(flash in all) {
+            Message: #(flash.message)
+            Type: #(flash.kind)
+        }
     }
-}
 </div>
 ```
 
@@ -133,15 +133,15 @@ Without using any dependencies, this is how Flash messages could be rendered:
 
 The below example uses the Vapor 3 [Bootstrap package](https://github.com/nodes-vapor/bootstrap) for generating the alert html.
 
-```html
+```javascript
 <div class="alerts">
-#flash() {
-    #for(flash in all) {
-        #bs:alert(flash.bootstrapClass) {
-            #(flash.message)
+    #flash() {
+        #for(flash in all) {
+            #bs:alert(flash.bootstrapClass) {
+                #(flash.message)
+            }
         }
     }
-}
 </div>
 
 ```
