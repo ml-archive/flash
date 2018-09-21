@@ -95,7 +95,7 @@ func renderRegister(req: Request) throws -> Future<View> {
   return viewRenderer.render("User/register", viewData)
 }
 ```
-In order to create a leaf renderer with `make` you'd have to configure your prefered view renderer in **configure.swift**:
+*Hint:* In order to create a LeafRenderer with `make` you'd have to configure your prefered ViewRenderer in **configure.swift**:
 ```swift
 config.prefer(LeafRenderer.self, for: ViewRenderer.self)
 ```
