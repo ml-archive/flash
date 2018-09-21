@@ -95,11 +95,6 @@ func renderRegister(req: Request) throws -> Future<View> {
   return viewRenderer.render("User/register", viewData)
 }
 ```
-*Hint:* In order to create a LeafRenderer with `make` you'd have to configure your prefered ViewRenderer in **configure.swift**:
-```swift
-config.prefer(LeafRenderer.self, for: ViewRenderer.self)
-```
-
 ### Example of HTML
 
 This package comes with a Leaf tag that makes it easy and convenient to display Flash messages. We suggest to use the [Bootstrap package](https://github.com/nodes-vapor/bootstrap) for rendering Bootstrap elements, but this package does not depend on it.
