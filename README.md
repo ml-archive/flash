@@ -88,6 +88,13 @@ request.redirect(to: "/users").flash(.warning, "Updated user")
 request.redirect(to: "/users").flash(.error, "Something went wrong")
 ```
 
+**Make sure** the route you are redirecting to is rendering the view on a `privateContainer`. For example:
+```swift
+func renderRegister(req: Request) throws -> Future<View> {
+  let viewRenderer = try req.privateContainer.make(LeafRenderer.self)
+  return viewRenderer.render("User/register")
+}
+```
 ### Example of HTML
 
 This package comes with a Leaf tag that makes it easy and convenient to display Flash messages. We suggest to use the [Bootstrap package](https://github.com/nodes-vapor/bootstrap) for rendering Bootstrap elements, but this package does not depend on it.
