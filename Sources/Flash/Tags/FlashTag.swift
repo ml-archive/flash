@@ -24,8 +24,7 @@ public final class FlashTag: TagRenderer {
                     try flash.convertToTemplateData()
                 })
             }
-
-        flashes["all"] = .array(flashes.values.compactMap { $0 })
+        flashes["all"] = .array(try flash.flashes.map { flash in try flash.convertToTemplateData() })
 
         let existing = (tag.context.data.dictionary ?? [:])
         tag.context.data = .dictionary(
