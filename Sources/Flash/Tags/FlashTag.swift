@@ -25,6 +25,7 @@ public final class FlashTag: TagRenderer {
                 })
             }
         flashes["all"] = .array(try flash.flashes.map { flash in try flash.convertToTemplateData() })
+        flash.flashes.removeAll()
 
         let existing = (tag.context.data.dictionary ?? [:])
         tag.context.data = .dictionary(
