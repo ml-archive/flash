@@ -1,12 +1,10 @@
 import Leaf
-import Sugar
 import Vapor
 
 public final class FlashProvider: Provider {
     public init() {}
 
     public func register(_ services: inout Services) throws {
-        try services.register(MutableLeafTagConfigProvider())
         services.register(FlashMiddleware.self)
         services.register { container in
             return FlashContainer()
@@ -14,9 +12,12 @@ public final class FlashProvider: Provider {
     }
 
     public func didBoot(_ container: Container) throws -> EventLoopFuture<Void> {
-        let tags: MutableLeafTagConfig = try container.make()
-        tags.use(FlashTag(), as: "flash")
-
         return .done(on: container)
+    }
+}
+
+public extension LeafTagConfig {
+    public mutating func useFlashLeafTags() {
+        use(FlashTag(), as: "flash")
     }
 }
