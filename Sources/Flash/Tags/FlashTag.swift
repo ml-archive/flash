@@ -1,15 +1,15 @@
 import Leaf
+import Sugar
 import TemplateKit
 
 public final class FlashTag: TagRenderer {
-    public func render(tag: TagContext) throws -> EventLoopFuture<TemplateData> {
+    public func render(tag: TagContext) throws -> Future<TemplateData> {
         let body = try tag.requireBody()
-        let flash = try tag.container.make(FlashContainer.self)
+        let request = try tag.requireRequest()
+        let flash = try request.privateContainer.make(FlashContainer.self)
 
         guard !flash.flashes.isEmpty else {
-           return Future.map(on: tag) {
-                .string("")
-            }
+           return tag.future(.string(""))
         }
 
         var dict = tag.context.data.dictionary ?? [:]

@@ -11,7 +11,7 @@ public final class FlashProvider: Provider {
         }
     }
 
-    public func didBoot(_ container: Container) throws -> EventLoopFuture<Void> {
+    public func didBoot(_ container: Container) throws -> Future<Void> {
         return .done(on: container)
     }
 }
