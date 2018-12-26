@@ -1,70 +1,63 @@
 import Leaf
 import TemplateKit
 
+/// Tag that
 public final class FlashTag: TagRenderer {
-    public func render(tag: TagContext) throws -> EventLoopFuture<TemplateData> {
+    /// Create a new `FlashTag`.
+    public init() {}
+
+    /// See `TagRenderer.render`.
+    public func render(tag: TagContext) throws -> Future<TemplateData> {
         let body = try tag.requireBody()
-        let flash = try tag.container.make(FlashContainer.self)
+        let flash: FlashContainer = try tag.container.make()
 
         guard !flash.flashes.isEmpty else {
-           return Future.map(on: tag) {
-                .string("")
-            }
+            return tag.future(.null)
         }
 
-        var dict = tag.context.data.dictionary ?? [:]
-        dict["all"] = try .array(flash.flashes.map {
-            try $0.convertToTemplateData()
-        })
+        var flashes =
+            try Dictionary(grouping: flash.flashes) { flash in
+                flash.kind.groupingKey
+            }
+            .mapValues { flashes -> TemplateData in
+                .array(try flashes.map { flash in
+                    try flash.convertToTemplateData()
+                })
+            }
+        flashes["all"] = .array(try flash.flashes.map { flash in try flash.convertToTemplateData() })
+        flash.flashes.removeAll()
 
-        dict["errors"] = try .array(flash.flashes.compactMap { flash in
-            guard flash.kind == .error else { return nil }
-            return try flash.convertToTemplateData()
-        })
+        let existing = (tag.context.data.dictionary ?? [:])
+        tag.context.data = .dictionary(
+            existing.merging(flashes) { (existing, fromFlash) -> TemplateData in
+                return fromFlash
+            }
+        )
 
-        dict["warnings"] = try .array(flash.flashes.compactMap { flash in
-            guard flash.kind == .warning else { return nil }
-            return try flash.convertToTemplateData()
-        })
-
-        dict["successes"] = try .array(flash.flashes.compactMap { flash in
-            guard flash.kind == .success else { return nil }
-            return try flash.convertToTemplateData()
-        })
-
-        dict["information"] = try .array(flash.flashes.compactMap { flash in
-            guard flash.kind == .info else { return nil }
-            return try flash.convertToTemplateData()
-        })
-
-        tag.context.data = .dictionary(dict)
-
-        return tag.serializer.serialize(ast: body).map(to: TemplateData.self) { er in
-            let body = String(data: er.data, encoding: .utf8) ?? ""
-            return .string(body)
+        return tag.serializer.serialize(ast: body).map { view in
+            .string(String(data: view.data, encoding: .utf8) ?? "")
         }
     }
-
-    public init() {}
 }
 
 extension Flash: TemplateDataRepresentable {
+    /// See `TemplateDataRepresentable`.
     public func convertToTemplateData() throws -> TemplateData {
-        return TemplateData.dictionary([
-            "kind": .string(self.kind.rawValue),
-            "bootstrapClass": .string(self.kind.bootstrapClass),
-            "message": .string(self.message)
+        return .dictionary([
+            "kind": .string(kind.rawValue),
+            "bootstrapClass": .string(kind.rawValue),
+            "message": .string(message)
         ])
     }
 }
 
 extension Flash.Kind {
-    var bootstrapClass: String {
+    var groupingKey: String {
         switch self {
-        case .error: return "danger"
-        case .warning: return "warning"
-        case .success: return "success"
-        case .info: return "info"
+        case .error: return "errors"
+        case .info: return "information"
+        case .success: return "successes"
+        case .warning: return "warnings"
         }
     }
 }
