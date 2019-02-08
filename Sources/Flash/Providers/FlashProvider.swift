@@ -15,9 +15,3 @@ public final class FlashProvider: Provider {
         return .done(on: container)
     }
 }
-
-public extension LeafTagConfig {
-    public mutating func useFlashLeafTags() {
-        use(FlashTag(), as: "flash")
-    }
-}

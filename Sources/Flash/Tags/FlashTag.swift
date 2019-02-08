@@ -2,11 +2,17 @@ import Leaf
 import Sugar
 import TemplateKit
 
-public final class FlashTag: TagRenderer {
+public final class FlashTag {
+    public init() {}
+}
+
+// MARK: - TagRenderer
+
+extension FlashTag: TagRenderer {
     public func render(tag: TagContext) throws -> Future<TemplateData> {
         let body = try tag.requireBody()
         let request = try tag.requireRequest()
-        let flash = try request.privateContainer.make(FlashContainer.self)
+        let flash: FlashContainer = try request.privateContainer.make()
 
         guard !flash.flashes.isEmpty else {
            return tag.future(.string(""))
@@ -39,32 +45,21 @@ public final class FlashTag: TagRenderer {
 
         tag.context.data = .dictionary(dict)
 
-        return tag.serializer.serialize(ast: body).map(to: TemplateData.self) { er in
-            let body = String(data: er.data, encoding: .utf8) ?? ""
+        return tag.serializer.serialize(ast: body).map { view in
+            let body = String(data: view.data, encoding: .utf8) ?? ""
             return .string(body)
         }
     }
-
-    public init() {}
 }
+
+// MARK: - TemplateDataRepresentable
 
 extension Flash: TemplateDataRepresentable {
     public func convertToTemplateData() throws -> TemplateData {
-        return TemplateData.dictionary([
-            "kind": .string(self.kind.rawValue),
-            "bootstrapClass": .string(self.kind.bootstrapClass),
-            "message": .string(self.message)
+        return .dictionary([
+            "kind": .string(kind.rawValue),
+            "bootstrapClass": .string(kind.bootstrapClass),
+            "message": .string(message)
         ])
-    }
-}
-
-extension Flash.Kind {
-    var bootstrapClass: String {
-        switch self {
-        case .error: return "danger"
-        case .warning: return "warning"
-        case .success: return "success"
-        case .info: return "info"
-        }
     }
 }
