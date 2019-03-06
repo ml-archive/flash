@@ -13,9 +13,26 @@ This package allows you to display Flash messages between your views.
 
 # Installation
 
-Update your `Package.swift` file.
+Add `Flash` to the package dependencies (in your `Package.swift` file):
+
 ```swift
-.package(url: "https://github.com/nodes-vapor/flash.git", from: "3.0.0")
+dependencies: [
+    ...,
+    .package(url: "https://github.com/nodes-vapor/flash.git", from: "4.0.0-beta")
+]
+```
+
+as well as to your target (e.g. "App"):
+
+```swift
+targets: [
+    ...
+    .target(
+        name: "App",
+        dependencies: [... "Flash" ...]
+    ),
+    ...
+]
 ```
 
 ## Getting started 🚀
@@ -82,13 +99,6 @@ request.redirect(to: "/users").flash(.warning, "Updated user")
 request.redirect(to: "/users").flash(.error, "Something went wrong")
 ```
 
-**Make sure** the route you are redirecting to is rendering the view on a `privateContainer`. For example:
-```swift
-func renderRegister(req: Request) throws -> Future<View> {
-  let viewRenderer = try req.privateContainer.make(LeafRenderer.self)
-  return viewRenderer.render("User/register")
-}
-```
 ### Example of HTML
 
 This package comes with a Leaf tag that makes it easy and convenient to display Flash messages. We suggest to use the [Bootstrap package](https://github.com/nodes-vapor/bootstrap) for rendering Bootstrap elements, but this package does not depend on it.
@@ -145,7 +155,7 @@ Add the Flash html to one file and embed it in rest of your views or through a b
 ## 🏆 Credits
 
 This package is developed and maintained by the Vapor team at [Nodes](https://www.nodesagency.com).
-The package owner for this project is [Brett](https://github.com/brettrtoomey).
+The package owner for this project is [Siemen](https://github.com/siemensikkema).
 
 ## 📄 License
 

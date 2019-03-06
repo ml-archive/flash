@@ -21,3 +21,14 @@ public final class Flash: Codable {
         self.message = message
     }
 }
+
+extension Flash.Kind {
+    var bootstrapClass: String {
+        switch self {
+        case .error: return "danger"
+        case .warning: return "warning"
+        case .success: return "success"
+        case .info: return "info"
+        }
+    }
+}

@@ -8,7 +8,6 @@ public final class FlashContainer: Codable, Service {
         get {
             return new
         }
-
         set {
             new = newValue
         }
