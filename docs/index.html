@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Flash  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="Flash  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">Flash Docs</a> (27% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">Flash Reference</a>
+        <img id="carat" src="img/carat.png" />
+        Flash  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/Flash.html">Flash</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/Flash/Kind.html">– Kind</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/FlashContainer.html">FlashContainer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/FlashProvider.html">FlashProvider</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/FlashTag.html">FlashTag</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/Future.html">Future</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/LeafTagConfig.html">LeafTagConfig</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/Request.html">Request</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/Response.html">Response</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/FlashMiddleware.html">FlashMiddleware</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <h1 id='flash' class='heading'>Flash ⚡️</h1>
+
+<p><a href="http://swift.org"><img src="https://img.shields.io/badge/Swift-4.1-brightgreen.svg" alt="Swift Version"></a>
+<a href="http://vapor.codes"><img src="https://img.shields.io/badge/Vapor-3-30B6FC.svg" alt="Vapor Version"></a>
+<a href="https://circleci.com/gh/nodes-vapor/flash"><img src="https://circleci.com/gh/nodes-vapor/flash/tree/master.svg?style=shield" alt="Circle CI"></a>
+<a href="https://codebeat.co/projects/github-com-nodes-vapor-flash-master"><img src="https://codebeat.co/badges/10cffe07-3d4f-420c-adb9-a98529671bfa" alt="codebeat badge"></a>
+<a href="https://codecov.io/gh/nodes-vapor/flash"><img src="https://codecov.io/gh/nodes-vapor/flash/branch/master/graph/badge.svg" alt="codecov"></a>
+<a href="http://clayallsopp.github.io/readme-score?url=https://github.com/nodes-vapor/flash"><img src="http://readme-score-api.herokuapp.com/score.svg?url=https://github.com/nodes-vapor/flash" alt="Readme Score"></a>
+<a href="https://raw.githubusercontent.com/nodes-vapor/flash/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="GitHub license"></a></p>
+
+<p>This package allows you to display Flash messages between your views.</p>
+
+<p><img src="https://github.com/nodes-vapor/flash/blob/master/flash.png" alt="image"></p>
+<h1 id='installation' class='heading'>Installation</h1>
+
+<p>Add <code><a href="Classes/Flash.html">Flash</a></code> to the package dependencies (in your <code>Package.swift</code> file):</p>
+<pre class="highlight swift"><code><span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
+    <span class="o">...</span><span class="p">,</span>
+    <span class="o">.</span><span class="nf">package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/nodes-vapor/flash.git"</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="s">"4.0.0-beta"</span><span class="p">)</span>
+<span class="p">]</span>
+</code></pre>
+
+<p>as well as to your target (e.g. <q>App</q>):</p>
+<pre class="highlight swift"><code><span class="nv">targets</span><span class="p">:</span> <span class="p">[</span>
+    <span class="o">...</span>
+    <span class="o">.</span><span class="nf">target</span><span class="p">(</span>
+        <span class="nv">name</span><span class="p">:</span> <span class="s">"App"</span><span class="p">,</span>
+        <span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span> <span class="s">"Flash"</span> <span class="o">...</span><span class="p">]</span>
+    <span class="p">),</span>
+    <span class="o">...</span>
+<span class="p">]</span>
+</code></pre>
+<h2 id='getting-started' class='heading'>Getting started 🚀</h2>
+
+<p>First make sure that you&rsquo;ve imported Flash everywhere when needed:</p>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Flash</span>
+</code></pre>
+<h3 id='adding-the-provider' class='heading'>Adding the provider</h3>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">configure</span><span class="p">(</span><span class="n">_</span> <span class="nv">config</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Config</span><span class="p">,</span> <span class="n">_</span> <span class="nv">env</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Environment</span><span class="p">,</span> <span class="n">_</span> <span class="nv">services</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Services</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="n">services</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="kt">FlashProvider</span><span class="p">())</span>
+<span class="p">}</span>
+</code></pre>
+<h3 id='adding-the-middleware' class='heading'>Adding the middleware</h3>
+
+<p>You can either add the Flash middleware globally by doing:</p>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">configure</span><span class="p">(</span><span class="n">_</span> <span class="nv">config</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Config</span><span class="p">,</span> <span class="n">_</span> <span class="nv">env</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Environment</span><span class="p">,</span> <span class="n">_</span> <span class="nv">services</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Services</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">middlewares</span> <span class="o">=</span> <span class="kt">MiddlewareConfig</span><span class="p">()</span>
+    <span class="n">middlewares</span><span class="o">.</span><span class="nf">use</span><span class="p">(</span><span class="kt">FlashMiddleware</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+    <span class="n">middlewares</span><span class="o">.</span><span class="nf">use</span><span class="p">(</span><span class="kt">SessionsMiddleware</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+    <span class="n">services</span><span class="o">.</span><span class="nf">register</span><span class="p">(</span><span class="n">middlewares</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Alternatively, you can add the middleware to individual route groups where needed:</p>
+<pre class="highlight swift"><code><span class="n">router</span><span class="o">.</span><span class="nf">group</span><span class="p">(</span><span class="kt">FlashMiddleware</span><span class="p">())</span> <span class="p">{</span> <span class="n">router</span> <span class="k">in</span>
+    <span class="c1">// .. routes</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Please note that the <code>SessionsMiddleware</code> needs to be added to the same route groups where Flash is added.</p>
+<h3 id='adding-the-leaf-tag' class='heading'>Adding the Leaf tag</h3>
+
+<p>In order to render Flash messages, you will need to add the Flash Leaf tag:</p>
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">configure</span><span class="p">(</span><span class="n">_</span> <span class="nv">config</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Config</span><span class="p">,</span> <span class="n">_</span> <span class="nv">env</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Environment</span><span class="p">,</span> <span class="n">_</span> <span class="nv">services</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Services</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+    <span class="n">services</span><span class="o">.</span><span class="n">register</span> <span class="p">{</span> <span class="n">_</span> <span class="o">-&gt;</span> <span class="kt">LeafTagConfig</span> <span class="k">in</span>
+        <span class="k">var</span> <span class="nv">tags</span> <span class="o">=</span> <span class="kt">LeafTagConfig</span><span class="o">.</span><span class="nf">default</span><span class="p">()</span>
+        <span class="n">tags</span><span class="o">.</span><span class="nf">useFlashLeafTags</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">tags</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id='using-flash-messages' class='heading'>Using Flash messages</h2>
+
+<p>With Flash set up, you are now able to redirect while adding a Flash message, given a <code>Request</code>:</p>
+<pre class="highlight swift"><code><span class="n">request</span><span class="o">.</span><span class="nf">redirect</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="s">"/users"</span><span class="p">)</span><span class="o">.</span><span class="nf">flash</span><span class="p">(</span><span class="o">.</span><span class="n">success</span><span class="p">,</span> <span class="s">"Successfully saved"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="nf">redirect</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="s">"/users"</span><span class="p">)</span><span class="o">.</span><span class="nf">flash</span><span class="p">(</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="s">"Email sent"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="nf">redirect</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="s">"/users"</span><span class="p">)</span><span class="o">.</span><span class="nf">flash</span><span class="p">(</span><span class="o">.</span><span class="n">warning</span><span class="p">,</span> <span class="s">"Updated user"</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="nf">redirect</span><span class="p">(</span><span class="nv">to</span><span class="p">:</span> <span class="s">"/users"</span><span class="p">)</span><span class="o">.</span><span class="nf">flash</span><span class="p">(</span><span class="o">.</span><span class="n">error</span><span class="p">,</span> <span class="s">"Something went wrong"</span><span class="p">)</span>
+</code></pre>
+<h3 id='example-of-html' class='heading'>Example of HTML</h3>
+
+<p>This package comes with a Leaf tag that makes it easy and convenient to display Flash messages. We suggest to use the <a href="https://github.com/nodes-vapor/bootstrap">Bootstrap package</a> for rendering Bootstrap elements, but this package does not depend on it.</p>
+
+<p>It&rsquo;s possible to loop through the different kinds of messages using:</p>
+
+<ul>
+<li><code>all</code>: All Flash messages no matter the kind.</li>
+<li><code>successes</code>: All Flash messages of type <code>success</code>.</li>
+<li><code>information</code>: All Flash messages of type <code>info</code>.</li>
+<li><code>warnings</code>: All Flash messages of type <code>warning</code>.</li>
+<li><code>errors</code>: All Flash messages of type <code>error</code>.</li>
+</ul>
+
+<p>Further, using the <code>message</code> property you will be able to pull out the message of the Flash message. You can also get the kind by using the <code>kind</code> property. This property will hold one of the following values: <code>success</code>, <code>info</code>, <code>warning</code> or <code>error</code>. Lastly, you can use the <code>bootstrapClass</code> to get the relevant Bootstrap class:</p>
+
+<ul>
+<li><code>success</code> will return <code>success</code>.</li>
+<li><code>info</code> will return <code>info</code>.</li>
+<li><code>warning</code> will return <code>warning</code>.</li>
+<li><code>error</code> will return <code>danger</code>.</li>
+</ul>
+<h4 id='not-using-the-bootstrap-package' class='heading'>Not using the Bootstrap package</h4>
+
+<p>Without using any dependencies, this is how Flash messages could be rendered:</p>
+<pre class="highlight javascript"><code><span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"alerts"</span><span class="o">&gt;</span>
+    <span class="err">#</span><span class="nx">flash</span><span class="p">()</span> <span class="p">{</span>
+        <span class="err">#</span><span class="k">for</span><span class="p">(</span><span class="nx">flash</span> <span class="k">in</span> <span class="nx">all</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nl">Message</span><span class="p">:</span> <span class="err">#</span><span class="p">(</span><span class="nx">flash</span><span class="p">.</span><span class="nx">message</span><span class="p">)</span>
+            <span class="nl">Type</span><span class="p">:</span> <span class="err">#</span><span class="p">(</span><span class="nx">flash</span><span class="p">.</span><span class="nx">kind</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span></code></pre>
+<h4 id='using-the-bootstrap-package' class='heading'>Using the Bootstrap package</h4>
+
+<p>The below example uses the Vapor 3 <a href="https://github.com/nodes-vapor/bootstrap">Bootstrap package</a> for generating the alert html.</p>
+<pre class="highlight javascript"><code><span class="o">&lt;</span><span class="nx">div</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"alerts"</span><span class="o">&gt;</span>
+    <span class="err">#</span><span class="nx">flash</span><span class="p">()</span> <span class="p">{</span>
+        <span class="err">#</span><span class="k">for</span><span class="p">(</span><span class="nx">flash</span> <span class="k">in</span> <span class="nx">all</span><span class="p">)</span> <span class="p">{</span>
+            <span class="err">#</span><span class="nx">bs</span><span class="p">:</span><span class="nx">alert</span><span class="p">(</span><span class="nx">flash</span><span class="p">.</span><span class="nx">bootstrapClass</span><span class="p">)</span> <span class="p">{</span>
+                <span class="err">#</span><span class="p">(</span><span class="nx">flash</span><span class="p">.</span><span class="nx">message</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span>
+</code></pre>
+
+<p>Add the Flash html to one file and embed it in rest of your views or through a base layout, e.g.: <code>#embed(&quot;alerts&quot;)</code>.</p>
+<h2 id='credits' class='heading'>🏆 Credits</h2>
+
+<p>This package is developed and maintained by the Vapor team at <a href="https://www.nodesagency.com">Nodes</a>.
+The package owner for this project is <a href="https://github.com/siemensikkema">Siemen</a>.</p>
+<h2 id='license' class='heading'>📄 License</h2>
+
+<p>This package is open-sourced software licensed under the <a href="http://opensource.org/licenses/MIT">MIT license</a></p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-08-01)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.10.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
