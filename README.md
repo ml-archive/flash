@@ -1,6 +1,6 @@
 # Flash ⚡️
-[![Swift Version](https://img.shields.io/badge/Swift-4.1-brightgreen.svg)](http://swift.org)
-[![Vapor Version](https://img.shields.io/badge/Vapor-3-30B6FC.svg)](http://vapor.codes)
+[![Swift Version](https://img.shields.io/badge/Swift-5.2-brightgreen.svg)](http://swift.org)
+[![Vapor Version](https://img.shields.io/badge/Vapor-4-30B6FC.svg)](http://vapor.codes)
 [![Circle CI](https://circleci.com/gh/nodes-vapor/flash/tree/master.svg?style=shield)](https://circleci.com/gh/nodes-vapor/flash)
 [![codebeat badge](https://codebeat.co/badges/10cffe07-3d4f-420c-adb9-a98529671bfa)](https://codebeat.co/projects/github-com-nodes-vapor-flash-master)
 [![codecov](https://codecov.io/gh/nodes-vapor/flash/branch/master/graph/badge.svg)](https://codecov.io/gh/nodes-vapor/flash)
@@ -56,18 +56,15 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 You can either add the Flash middleware globally by doing:
 
 ```swift
-public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
-    var middlewares = MiddlewareConfig()
-    middlewares.use(FlashMiddleware.self)
-    middlewares.use(SessionsMiddleware.self)
-    services.register(middlewares)
+func configure(_ app: Application) throws {
+    app.middleware.use(FlashMiddleware())
 }
 ```
 
 Alternatively, you can add the middleware to individual route groups where needed:
 
 ```swift
-router.group(FlashMiddleware()) { router in
+router.grouped([SessionsMiddleware(), FlashMiddleware()]) { router in
     // .. routes
 }
 ```
@@ -76,15 +73,11 @@ Please note that the `SessionsMiddleware` needs to be added to the same route gr
 
 ### Adding the Leaf tag
 
-In order to render Flash messages, you will need to add the Flash Leaf tag:
+In order to render Flash messages, you will need to add the Flash Leaf tag to your application:
 
 ```swift
-public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
-    services.register { _ -> LeafTagConfig in
-        var tags = LeafTagConfig.default()
-        tags.useFlashLeafTags()
-        return tags
-    }
+func configure(_ app: Application) throws {
+    app.leaf.tags["flashes"] = FlashTag()
 }
 ```
 
@@ -124,12 +117,10 @@ Without using any dependencies, this is how Flash messages could be rendered:
 
 ```javascript
 <div class="alerts">
-    #flash() {
-        #for(flash in all) {
-            Message: #(flash.message)
-            Type: #(flash.kind)
-        }
-    }
+#for(flash in flashes().all):
+        Message: #(flash.message)
+        Type: #(flash.kind)
+    #endfor
 </div>
 ```
 
@@ -139,13 +130,11 @@ The below example uses the Vapor 3 [Bootstrap package](https://github.com/nodes-
 
 ```javascript
 <div class="alerts">
-    #flash() {
-        #for(flash in all) {
-            #bs:alert(flash.bootstrapClass) {
-                #(flash.message)
-            }
+    #for(flash in flashes().all):
+        #bs:alert(flash.bootstrapClass) {
+            #(flash.message)
         }
-    }
+    #endfor
 </div>
 
 ```

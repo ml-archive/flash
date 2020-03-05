@@ -1,5 +1,4 @@
 import XCTest
-import HTTP
 @testable import Flash
 
 class FlashTests: XCTestCase {
