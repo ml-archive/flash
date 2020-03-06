@@ -13,8 +13,7 @@ public struct FlashMiddleware: Middleware {
     }
 
     private func handle(request: Request) {
-        request.flashes.removeAll()
-        request.flashes += request.session.flashes
+        request.flashes = request.session.flashes
     }
 
     private func handle(request: Request, response: Response) {
