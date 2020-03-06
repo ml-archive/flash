@@ -15,14 +15,11 @@ public extension Session {
             return flashes
         }
         set {
-            guard
-                let newFlashes = try? String(data: JSONEncoder().encode(newValue), encoding: .utf8)
-            else {
+            if let flashData = try? JSONEncoder().encode(newValue) {
+                data[Self.flashSessionKey] = String(data: flashData, encoding: .utf8)
+            } else {
                 data[Self.flashSessionKey] = nil
-                return
             }
-
-            data[Self.flashSessionKey] = newFlashes
         }
     }
 }
