@@ -64,7 +64,7 @@ func configure(_ app: Application) throws {
 Alternatively, you can add the middleware to individual route groups where needed:
 
 ```swift
-router.grouped([SessionsMiddleware(), FlashMiddleware()]) { router in
+router.grouped([SessionsMiddleware(driver: app.sessions.driver), FlashMiddleware()]) { router in
     // .. routes
 }
 ```
