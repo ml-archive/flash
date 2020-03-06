@@ -31,7 +31,7 @@ jobs:
             - .build
   Linux:
     docker:
-      - image: nodesvapor/vapor-ci:swift-5.2
+      - image: vapor/swift:5.2-xenial
     steps:
       - checkout
       - restore_cache:
