@@ -6,6 +6,8 @@ public struct FlashTag: LeafTag {
         static let all = "all"
     }
 
+    public init() {}
+
     public func render(_ ctx: LeafContext) throws -> LeafData {
         guard let request = ctx.request else {
             throw LeafContextError.requestNotPassedToRenderContext
