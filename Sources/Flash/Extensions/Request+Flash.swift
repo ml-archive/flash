@@ -1,11 +1,18 @@
 import Vapor
 
-extension Request {
-    @discardableResult
-    public func flash(_ type: Flash.Kind, _ message: String) -> Request {
-        if let container = try? privateContainer.make(FlashContainer.self) {
-            container.flashes.append(.init(type, message))
+extension Request: FlashProviding {
+    public var flashes: [Flash] {
+        get {
+            if let existing = storage[FlashStorageKey.self] {
+                return existing
+            } else {
+                let new = FlashStorageKey.Value()
+                storage[FlashStorageKey.self] = new
+                return new
+            }
         }
-        return self
+        set {
+            storage[FlashStorageKey.self] = newValue
+        }
     }
 }

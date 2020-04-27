@@ -1,7 +1,7 @@
 import Vapor
 
 public final class Flash: Codable {
-    public enum Kind: String, Codable {
+    public enum Kind: String, CaseIterable, Codable {
         case error
         case success
         case info
@@ -25,10 +25,10 @@ public final class Flash: Codable {
 extension Flash.Kind {
     var bootstrapClass: String {
         switch self {
-        case .error: return "danger"
-        case .warning: return "warning"
-        case .success: return "success"
-        case .info: return "info"
+            case .error: return "danger"
+            case .warning: return "warning"
+            case .success: return "success"
+            case .info: return "info"
         }
     }
 }

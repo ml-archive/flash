@@ -1,65 +1,72 @@
 import Leaf
-import Sugar
-import TemplateKit
+import Vapor
 
-public final class FlashTag {
+public struct FlashTag: LeafTag {
+    private enum DataKey {
+        static let all = "all"
+    }
+
     public init() {}
-}
 
-// MARK: - TagRenderer
-
-extension FlashTag: TagRenderer {
-    public func render(tag: TagContext) throws -> Future<TemplateData> {
-        let body = try tag.requireBody()
-        let request = try tag.requireRequest()
-        let flash: FlashContainer = try request.privateContainer.make()
-
-        guard !flash.flashes.isEmpty else {
-           return tag.future(.string(""))
+    public func render(_ ctx: LeafContext) throws -> LeafData {
+        guard let request = ctx.request else {
+            throw LeafContextError.requestNotPassedToRenderContext
         }
 
-        var dict = tag.context.data.dictionary ?? [:]
-        dict["all"] = try .array(flash.flashes.map {
-            try $0.convertToTemplateData()
-        })
+        var dictionary: [String: LeafData] = [
+            DataKey.all: request.flashes.leafData
+        ]
 
-        dict["errors"] = try .array(flash.flashes.compactMap { flash in
-            guard flash.kind == .error else { return nil }
-            return try flash.convertToTemplateData()
-        })
-
-        dict["warnings"] = try .array(flash.flashes.compactMap { flash in
-            guard flash.kind == .warning else { return nil }
-            return try flash.convertToTemplateData()
-        })
-
-        dict["successes"] = try .array(flash.flashes.compactMap { flash in
-            guard flash.kind == .success else { return nil }
-            return try flash.convertToTemplateData()
-        })
-
-        dict["information"] = try .array(flash.flashes.compactMap { flash in
-            guard flash.kind == .info else { return nil }
-            return try flash.convertToTemplateData()
-        })
-
-        tag.context.data = .dictionary(dict)
-
-        return tag.serializer.serialize(ast: body).map { view in
-            let body = String(data: view.data, encoding: .utf8) ?? ""
-            return .string(body)
+        for kind in Flash.Kind.allCases {
+            dictionary[kind.rawValue] = request.flashes.filter { $0.kind == kind }.leafData
         }
+
+        return .dictionary(dictionary)
     }
 }
 
-// MARK: - TemplateDataRepresentable
+extension Collection where Element: LeafDataRepresentable {
+    /// Note that this is _not_ conformance to `LeafDataRepresentable`, as the return type here is non-optional. It will always produce a result.
+    var leafData: LeafData {
+        .array(compactMap { $0.leafData })
+    }
+}
 
-extension Flash: TemplateDataRepresentable {
-    public func convertToTemplateData() throws -> TemplateData {
-        return .dictionary([
-            "kind": .string(kind.rawValue),
-            "bootstrapClass": .string(kind.bootstrapClass),
-            "message": .string(message)
+extension Flash: LeafDataRepresentable {
+    private enum DataKey {
+        static let kind = "kind"
+        static let bootstrapClass = "bootstrapClass"
+        static let message = "message"
+    }
+
+    public var leafData: LeafData? {
+        .dictionary([
+            DataKey.kind: .string(kind.rawValue),
+            DataKey.bootstrapClass: .string(kind.bootstrapClass),
+            DataKey.message: .string(message)
         ])
     }
 }
+
+enum LeafContextError: Error {
+    case requestNotPassedToRenderContext
+}
+
+extension LeafContextError {
+    var identifier: String {
+        switch self {
+            case .requestNotPassedToRenderContext: return "requestNotPassedToRenderContext"
+        }
+    }
+
+    var reason: String {
+        switch self {
+            case .requestNotPassedToRenderContext: return "Request not passed into render context."
+        }
+    }
+
+    var status: HTTPResponseStatus {
+        return .internalServerError
+    }
+}
+

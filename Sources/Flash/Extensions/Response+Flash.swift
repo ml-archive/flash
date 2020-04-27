@@ -1,10 +1,18 @@
 import Vapor
 
-public extension Response {
-    func flash(_ type: Flash.Kind, _ message: String) -> Response {
-        if let container = try? privateContainer.make(FlashContainer.self) {
-            container.flashes.append(.init(type, message))
+extension Response: FlashProviding {
+    public var flashes: [Flash] {
+        get {
+            if let existing = storage[FlashStorageKey.self] {
+                return existing
+            } else {
+                let new = FlashStorageKey.Value()
+                storage[FlashStorageKey.self] = new
+                return new
+            }
         }
-        return self
+        set {
+            storage[FlashStorageKey.self] = newValue
+        }
     }
 }

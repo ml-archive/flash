@@ -1,43 +1,18 @@
 import Vapor
 
-public struct FlashMiddleware: Middleware, ServiceType {
-    private static let sessionKey = "_flash"
-
-    private let jsonEncoder = JSONEncoder()
-    private let jsonDecoder = JSONDecoder()
-
-    /// See `ServiceType`.
-    public static func makeService(for container: Container) throws -> FlashMiddleware {
-        return .init()
-    }
-
+/// Middleware that passes along any flashes from the session to the next incoming request.
+public struct FlashMiddleware: Middleware {
     public init() {}
+    
+    public func respond(to request: Request, chainingTo next: Responder) -> EventLoopFuture<Response> {
+        // Copy any flashes from the session into the request before responding to it, without overwriting any existing flashes that have been inserted
+        request.flashes += request.session.flashes
 
-    /// See `Middleware`.
-    public func respond(to req: Request, chainingTo next: Responder) throws -> Future<Response> {
-        try handle(req: req)
-        return try next.respond(to: req)
-            .map(to: Response.self) { resp in
-                try self.handle(req: req, resp: resp)
-                return resp
-            }
-    }
+        return next.respond(to: request).map { response in
+            // Copy any flashes from the response to this request back into the session, replacing any existing flashes that are there already
+            request.session.flashes = response.flashes
 
-    private func handle(req: Request) throws {
-        guard let data = try req.session()[FlashMiddleware.sessionKey]?.data(using: .utf8) else { return }
-
-        let flash = try jsonDecoder.decode(FlashContainer.self, from: data)
-        let container = try req.privateContainer.make(FlashContainer.self)
-        container.new = flash.new
-        container.old = flash.old
-    }
-
-    private func handle(req: Request, resp: Response) throws {
-        let container = try resp.privateContainer.make(FlashContainer.self)
-        let flash = try String(
-            data: jsonEncoder.encode(container),
-            encoding: .utf8
-        )
-        try req.session()[FlashMiddleware.sessionKey] = flash
+            return response
+        }
     }
 }
