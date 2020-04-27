@@ -1,9 +1,9 @@
 import Vapor
 
-public extension Session {
+extension Session: FlashProviding {
     private static let flashSessionKey = "_flash"
 
-    var flashes: [Flash] {
+    public var flashes: [Flash] {
         get {
             guard
                 let data = data[Self.flashSessionKey]?.data(using: .utf8),
