@@ -66,7 +66,7 @@ extension LeafContextError {
     }
 
     var status: HTTPResponseStatus {
-        return .internalServerError
+        .internalServerError
     }
 }
 
