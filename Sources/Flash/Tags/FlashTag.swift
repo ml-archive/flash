@@ -1,4 +1,5 @@
 import Leaf
+import LeafKit
 import Vapor
 
 public struct FlashTag: LeafTag {
@@ -26,7 +27,6 @@ public struct FlashTag: LeafTag {
 }
 
 extension Collection where Element: LeafDataRepresentable {
-    /// Note that this is _not_ conformance to `LeafDataRepresentable`, as the return type here is non-optional. It will always produce a result.
     var leafData: LeafData {
         .array(compactMap { $0.leafData })
     }
@@ -39,7 +39,7 @@ extension Flash: LeafDataRepresentable {
         static let message = "message"
     }
 
-    public var leafData: LeafData? {
+    public var leafData: LeafData {
         .dictionary([
             DataKey.kind: .string(kind.rawValue),
             DataKey.bootstrapClass: .string(kind.bootstrapClass),
